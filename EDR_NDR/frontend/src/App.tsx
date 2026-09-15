@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Sidebar } from './components/layout/Sidebar'
+import { DashboardPage } from './pages/DashboardPage'
 import { AlertsPage } from './pages/AlertsPage'
 import { InvestigatePage } from './pages/InvestigatePage'
 import { AgentsPage } from './pages/AgentsPage'
@@ -13,7 +14,8 @@ function App() {
       <Sidebar />
       <main className="min-w-0 flex-1">
         <Routes>
-          <Route path="/" element={<Navigate to="/alerts" replace />} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/alerts" element={<AlertsPage />} />
           <Route path="/investigate" element={<InvestigatePage />} />
           <Route path="/agents" element={<AgentsPage />} />

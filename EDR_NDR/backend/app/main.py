@@ -3,7 +3,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import agents, alerts, events, rules, settings as settings_routes, virustotal
+from app.api.routes import agents, alerts, dashboard, events, rules, settings as settings_routes, virustotal
 from app.core.config import settings
 from app.core.database import SessionLocal, init_db
 from app.seed.seed_data import seed_if_empty
@@ -43,3 +43,4 @@ app.include_router(agents.router, prefix="/api")
 app.include_router(rules.router, prefix="/api")
 app.include_router(virustotal.router, prefix="/api")
 app.include_router(settings_routes.router, prefix="/api")
+app.include_router(dashboard.router, prefix="/api")

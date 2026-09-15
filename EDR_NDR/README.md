@@ -14,6 +14,7 @@ FastAPI 백엔드가 현실감 있는 알림/이벤트/에이전트/탐지룰 �
 - [x] 탐지 룰 등록/관리 (CRUD + 활성/비활성 토글 + 이벤트 기반 테스트 실행)
 - [x] VirusTotal 연동 (파일 해시/IP/도메인/URL 조회, 실제 API 키 사용, DB 캐시 + 분당 요청 제한)
 - [x] 설정 탭 (LLM/EDR/NDR/VirusTotal 자격증명 저장, 비밀 값은 Windows DPAPI로 암호화 + 연결 테스트)
+- [x] 대시보드 개요 (열린 알림/에이전트 현황 통계, 최근 7일 알림 추이, 심각도 분포, 상위 MITRE 기법 — 첫 화면)
 
 ## 실행 방법
 
@@ -39,7 +40,7 @@ http://localhost:5173 에서 확인. `/api/*` 요청은 Vite 프록시를 통해
 ## 스택
 
 - 백엔드: FastAPI, SQLAlchemy 2.0, SQLite, Faker, httpx(VirusTotal 클라이언트), pywin32(DPAPI)
-- 프론트엔드: React 19 + TypeScript, Vite, TailwindCSS 4, TanStack Query, React Router
+- 프론트엔드: React 19 + TypeScript, Vite, TailwindCSS 4, TanStack Query, React Router, Recharts
 
 > DPAPI(`app/core/security.py`)는 Windows 전용 API라서 이 백엔드는 Windows에서 실행해야 한다.
 > VirusTotal 키는 설정 탭에서 등록하면 DPAPI로 암호화되어 이 PC의 현재 사용자 계정에만 묶여 저장되고,

@@ -1,13 +1,14 @@
 import { NavLink } from 'react-router-dom'
-import { Bell, Search, Laptop, ShieldAlert, Bug, Settings, ShieldHalf } from 'lucide-react'
+import { LayoutDashboard, Bell, Search, Laptop, ShieldAlert, Bug, Settings, ShieldHalf } from 'lucide-react'
 
 const NAV_ITEMS = [
-  { to: '/alerts', label: '알림', icon: Bell, ready: true },
-  { to: '/investigate', label: '사고 조사', icon: Search, ready: true },
-  { to: '/agents', label: 'Agent', icon: Laptop, ready: true },
-  { to: '/rules', label: '탐지 룰', icon: ShieldAlert, ready: true },
-  { to: '/threat-intel', label: 'Threat Intel', icon: Bug, ready: true },
-  { to: '/settings', label: '설정', icon: Settings, ready: true },
+  { to: '/dashboard', label: '대시보드', icon: LayoutDashboard },
+  { to: '/alerts', label: '알림', icon: Bell },
+  { to: '/investigate', label: '사고 조사', icon: Search },
+  { to: '/agents', label: 'Agent', icon: Laptop },
+  { to: '/rules', label: '탐지 룰', icon: ShieldAlert },
+  { to: '/threat-intel', label: 'Threat Intel', icon: Bug },
+  { to: '/settings', label: '설정', icon: Settings },
 ]
 
 export function Sidebar() {
@@ -22,7 +23,7 @@ export function Sidebar() {
       </div>
 
       <nav className="flex-1 space-y-0.5 p-2">
-        {NAV_ITEMS.map(({ to, label, icon: Icon, ready }) => (
+        {NAV_ITEMS.map(({ to, label, icon: Icon }) => (
           <NavLink
             key={to}
             to={to}
@@ -36,7 +37,6 @@ export function Sidebar() {
           >
             <Icon className="h-4 w-4" />
             <span className="flex-1">{label}</span>
-            {!ready && <span className="rounded bg-slate-800 px-1.5 py-0.5 text-[10px] text-slate-500">준비중</span>}
           </NavLink>
         ))}
       </nav>
