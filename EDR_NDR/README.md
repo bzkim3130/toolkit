@@ -15,6 +15,7 @@ FastAPI 백엔드가 현실감 있는 알림/이벤트/에이전트/탐지룰 �
 - [x] VirusTotal 연동 (파일 해시/IP/도메인/URL 조회, 실제 API 키 사용, DB 캐시 + 분당 요청 제한)
 - [x] 설정 탭 (LLM/EDR/NDR/VirusTotal 자격증명 저장, 비밀 값은 Windows DPAPI로 암호화 + 연결 테스트)
 - [x] 대시보드 개요 (열린 알림/에이전트 현황 통계, 최근 7일 알림 추이, 심각도 분포, 상위 MITRE 기법 — 첫 화면)
+- [x] 백엔드 테스트 (pytest, 42개 — CRUD/필터/DPAPI 암복호화/휴리스틱 분석 엔진)
 
 ## 실행 방법
 
@@ -36,6 +37,16 @@ npm run dev
 ```
 
 http://localhost:5173 에서 확인. `/api/*` 요청은 Vite 프록시를 통해 백엔드(8000)로 전달된다.
+
+### 테스트
+
+```powershell
+cd backend
+.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+.venv\Scripts\python.exe -m pytest
+```
+
+`tests/conftest.py`가 임시 SQLite 파일과 축소된 mock 데이터(에이전트 10 / 알림 60 / 이벤트 300)로 앱을 띄우므로 `backend/data/edr_ndr.db`나 실제 VirusTotal 쿼터에는 영향을 주지 않는다.
 
 ## 스택
 

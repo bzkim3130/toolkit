@@ -1,4 +1,5 @@
 import logging
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,7 +11,20 @@ from app.seed.seed_data import seed_if_empty
 
 logging.basicConfig(level=logging.INFO)
 
-app = FastAPI(title=settings.app_name)
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    init_db()
+    if settings.seed_on_startup:
+        db = SessionLocal()
+        try:
+            seed_if_empty(db)
+        finally:
+            db.close()
+    yield
+
+
+app = FastAPI(title=settings.app_name, lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,17 +33,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.on_event("startup")
-def on_startup() -> None:
-    init_db()
-    if settings.seed_on_startup:
-        db = SessionLocal()
-        try:
-            seed_if_empty(db)
-        finally:
-            db.close()
 
 
 @app.get("/api/health")
