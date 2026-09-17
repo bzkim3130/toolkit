@@ -77,21 +77,22 @@ export const VERDICT_COLOR: Record<Verdict, string> = {
 }
 
 // Hex equivalents of the Tailwind classes above, for chart fills (SVG can't take Tailwind class names).
+// Kept in sync with the theme overrides in index.css.
 export const SEVERITY_HEX: Record<Severity, string> = {
-  critical: '#f87171', // red-400
-  high: '#fb923c', // orange-400
-  medium: '#fbbf24', // amber-400
-  low: '#38bdf8', // sky-400
-  info: '#94a3b8', // slate-400
+  critical: '#d06b62', // red-400
+  high: '#d98a34', // orange-400
+  medium: '#c9a227', // amber-400
+  low: '#6e8fa3', // sky-400
+  info: '#9ca08d', // slate-400
 }
 
 export const AGENT_STATUS_HEX: Record<AgentStatus, string> = {
-  online: '#34d399', // emerald-400
-  offline: '#94a3b8', // slate-400
-  isolated: '#f87171', // red-400
+  online: '#5c8c68', // emerald-400
+  offline: '#9ca08d', // slate-400
+  isolated: '#d06b62', // red-400
 }
 
-export const ACCENT_HEX = '#22d3ee' // cyan-400, this app's single accent color
+export const ACCENT_HEX = '#e3a23c' // signal amber, this app's single accent color
 
 export type RuleTypeValue = 'signature' | 'threshold' | 'correlation'
 

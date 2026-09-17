@@ -28,10 +28,10 @@ export function Sidebar() {
             key={to}
             to={to}
             className={({ isActive }) =>
-              `flex items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors ${
+              `flex items-center gap-2.5 border-l-2 px-3 py-2 text-sm transition-colors ${
                 isActive
-                  ? 'bg-cyan-500/10 text-cyan-300'
-                  : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'
+                  ? 'border-cyan-400 bg-cyan-500/10 text-cyan-300'
+                  : 'border-transparent text-slate-400 hover:bg-slate-900 hover:text-slate-200'
               }`
             }
           >

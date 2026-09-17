@@ -1,5 +1,72 @@
 @import "tailwindcss";
 
+/*
+ * Instrument-panel theme. Re-skins Tailwind's built-in `slate` and `cyan`
+ * scales in place (rather than introducing new token names) so every
+ * existing bg-slate and text-cyan class in the app repaints for free.
+ *   slate -> "ink": warm graphite instead of blue-slate.
+ *   cyan  -> "signal": a dim instrument-lamp amber, used only for
+ *            interactive/active/live state, never as decoration.
+ * Severity colors (red/orange/amber/emerald/sky/violet) are desaturated to
+ * read as indicator-lamp tones instead of a bright traffic-light triad.
+ */
+@theme {
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 3px;
+  --radius-xl: 4px;
+
+  --color-slate-50: #f6f7f2;
+  --color-slate-100: #ecede4;
+  --color-slate-200: #d8dace;
+  --color-slate-300: #bec1af;
+  --color-slate-400: #9ca08d;
+  --color-slate-500: #7d8271;
+  --color-slate-600: #565a4a;
+  --color-slate-700: #3a3e32;
+  --color-slate-800: #262920;
+  --color-slate-900: #191b15;
+  --color-slate-950: #0e100d;
+
+  --color-cyan-50: #fdf3e4;
+  --color-cyan-100: #f8e3c0;
+  --color-cyan-200: #f2ce94;
+  --color-cyan-300: #ebb868;
+  --color-cyan-400: #e3a23c;
+  --color-cyan-500: #d8931d;
+  --color-cyan-600: #b67714;
+  --color-cyan-700: #8f5b0f;
+  --color-cyan-800: #6b430b;
+  --color-cyan-900: #4a2e08;
+  --color-cyan-950: #2b1b06;
+
+  --color-red-300: #e5a39d;
+  --color-red-400: #d06b62;
+  --color-red-500: #c1443a;
+  --color-red-600: #a5362d;
+  --color-red-700: #832a23;
+
+  --color-orange-400: #d98a34;
+  --color-orange-500: #c97829;
+
+  --color-amber-400: #c9a227;
+  --color-amber-500: #b8931f;
+
+  --color-emerald-300: #8fbf9a;
+  --color-emerald-400: #5c8c68;
+  --color-emerald-500: #4c7857;
+  --color-emerald-600: #3d6146;
+
+  --color-sky-400: #6e8fa3;
+
+  --color-violet-400: #8a7fb0;
+  --color-violet-500: #766aa0;
+}
+
 @layer base {
   html, body, #root {
     height: 100%;

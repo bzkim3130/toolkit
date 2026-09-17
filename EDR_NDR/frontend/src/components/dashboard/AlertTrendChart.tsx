@@ -22,10 +22,10 @@ export function AlertTrendChart({ data }: { data: TrendPoint[] }) {
               <stop offset="100%" stopColor={ACCENT_HEX} stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid stroke="#1e293b" vertical={false} />
-          <XAxis dataKey="label" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={{ stroke: '#1e293b' }} tickLine={false} />
-          <YAxis tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} allowDecimals={false} width={28} />
-          <Tooltip content={<ChartTooltip />} cursor={{ stroke: '#334155' }} />
+          <CartesianGrid stroke="#262920" vertical={false} />
+          <XAxis dataKey="label" tick={{ fill: '#7d8271', fontSize: 11 }} axisLine={{ stroke: '#262920' }} tickLine={false} />
+          <YAxis tick={{ fill: '#7d8271', fontSize: 11 }} axisLine={false} tickLine={false} allowDecimals={false} width={28} />
+          <Tooltip content={<ChartTooltip />} cursor={{ stroke: '#3a3e32' }} />
           <Area
             type="monotone"
             dataKey="count"
@@ -34,7 +34,7 @@ export function AlertTrendChart({ data }: { data: TrendPoint[] }) {
             strokeWidth={2}
             fill="url(#alertTrendFill)"
             dot={false}
-            activeDot={{ r: 4, fill: ACCENT_HEX, stroke: '#020617', strokeWidth: 2 }}
+            activeDot={{ r: 4, fill: ACCENT_HEX, stroke: '#0e100d', strokeWidth: 2 }}
           />
         </AreaChart>
       </ResponsiveContainer>
