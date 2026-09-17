@@ -1,0 +1,299 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "EDR/NDR SOC 콘솔 아키텍처",
+    "output": "docs/architecture.html",
+    "quality_profile": "standard",
+    "repository": {
+      "url": "https://github.com/bzkim3130/toolkit",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "1bb73bf3509c4c49e2d6c9c4ac3acbd8ea68d8f8"
+    },
+    "views": [
+      {
+        "id": "request-path",
+        "label": "알림 조회 기본 경로",
+        "focus": [
+          "analyst",
+          "frontend",
+          "backend",
+          "db"
+        ],
+        "note": "분석가가 브라우저로 접속해 알림/이벤트를 조회하는 경로."
+      },
+      {
+        "id": "external-integrations",
+        "label": "외부 연동",
+        "focus": [
+          "backend",
+          "virustotal"
+        ],
+        "note": "실제 외부 API로 연동된 유일한 서비스."
+      },
+      {
+        "id": "local-security",
+        "label": "로컬 보안과 분석 엔진",
+        "focus": [
+          "backend",
+          "security",
+          "seed",
+          "analysis"
+        ],
+        "note": "DPAPI 암호화, 목업 시더, LLM 없이 동작하는 휴리스틱 분석."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "analyst",
+      "type": "external",
+      "label": "보안 분석가",
+      "sublabel": "브라우저",
+      "pos": [
+        30,
+        252
+      ],
+      "size": [
+        116,
+        60
+      ]
+    },
+    {
+      "id": "frontend",
+      "type": "frontend",
+      "label": "SOC Console",
+      "sublabel": "React 19 + Vite",
+      "tag": "frontend",
+      "pos": [
+        226,
+        250
+      ],
+      "size": [
+        142,
+        64
+      ],
+      "sources": [
+        {
+          "path": "EDR_NDR/frontend/src/App.tsx"
+        }
+      ]
+    },
+    {
+      "id": "backend",
+      "type": "backend",
+      "label": "FastAPI 서버",
+      "sublabel": "8개 라우터",
+      "tag": "backend",
+      "pos": [
+        468,
+        249
+      ],
+      "size": [
+        150,
+        66
+      ],
+      "sources": [
+        {
+          "path": "EDR_NDR/backend/app/main.py"
+        }
+      ]
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "SQLite",
+      "sublabel": "SQLAlchemy",
+      "pos": [
+        780,
+        40
+      ],
+      "size": [
+        126,
+        60
+      ],
+      "sources": [
+        {
+          "path": "EDR_NDR/backend/app/core/database.py"
+        }
+      ]
+    },
+    {
+      "id": "seed",
+      "type": "backend",
+      "label": "Mock 시더",
+      "sublabel": "Faker · 시작 시 1회",
+      "pos": [
+        780,
+        145
+      ],
+      "size": [
+        126,
+        60
+      ],
+      "sources": [
+        {
+          "path": "EDR_NDR/backend/app/seed/seed_data.py"
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "type": "security",
+      "label": "DPAPI 암호화",
+      "sublabel": "이 Windows 계정 전용",
+      "pos": [
+        780,
+        250
+      ],
+      "size": [
+        126,
+        62
+      ],
+      "sources": [
+        {
+          "path": "EDR_NDR/backend/app/core/security.py"
+        }
+      ]
+    },
+    {
+      "id": "analysis",
+      "type": "backend",
+      "label": "사고 분석 엔진",
+      "sublabel": "휴리스틱 · LLM 미구현",
+      "pos": [
+        780,
+        347
+      ],
+      "size": [
+        136,
+        60
+      ],
+      "sources": [
+        {
+          "path": "EDR_NDR/backend/app/services/mock_analysis.py"
+        }
+      ]
+    },
+    {
+      "id": "virustotal",
+      "type": "external",
+      "label": "VirusTotal",
+      "sublabel": "실제 REST API",
+      "pos": [
+        780,
+        442
+      ],
+      "size": [
+        136,
+        60
+      ],
+      "sources": [
+        {
+          "path": "EDR_NDR/backend/app/services/virustotal_client.py"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "로컬 Windows 환경 (127.0.0.1 전용)",
+      "wraps": [
+        "frontend",
+        "backend",
+        "db",
+        "seed",
+        "security",
+        "analysis"
+      ],
+      "pad": 20
+    },
+    {
+      "kind": "security-group",
+      "label": "DPAPI로 보호되는 저장소",
+      "wraps": [
+        "security"
+      ],
+      "pad": 14
+    }
+  ],
+  "connections": [
+    {
+      "from": "analyst",
+      "to": "frontend",
+      "label": "브라우저 접속 :5173",
+      "variant": "emphasis",
+      "labelAt": [
+        186,
+        246
+      ]
+    },
+    {
+      "from": "frontend",
+      "to": "backend",
+      "label": "/api → Vite 프록시 → :8000",
+      "variant": "emphasis",
+      "labelAt": [
+        418,
+        243
+      ]
+    },
+    {
+      "from": "backend",
+      "to": "db",
+      "label": "SQL"
+    },
+    {
+      "from": "backend",
+      "to": "seed",
+      "label": "시작 시 1회",
+      "variant": "dashed"
+    },
+    {
+      "from": "backend",
+      "to": "security",
+      "label": "자격증명 암/복호화"
+    },
+    {
+      "from": "backend",
+      "to": "analysis",
+      "label": "이벤트 패턴 매칭"
+    },
+    {
+      "from": "backend",
+      "to": "virustotal",
+      "label": "HTTPS · 4req/분 · 1h 캐시",
+      "variant": "security"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "핵심 특징",
+      "items": [
+        "실제 EDR/NDR 콘솔 연동 없이 Faker 목업으로 동작",
+        "VirusTotal만 실제 외부 API로 연동",
+        "LLM 없이도 휴리스틱 엔진이 사고 분석 수행"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "로컬 전용 보안",
+      "items": [
+        "백엔드는 127.0.0.1에만 바인딩",
+        "CORS가 localhost:5173만 허용",
+        "설정값은 Windows DPAPI로 이 계정에만 바인딩되어 저장"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "알려진 한계",
+      "items": [
+        "API 라우트 자체엔 인증 없음 (로컬 전용 전제)",
+        "DPAPI는 Windows 전용이라 백엔드는 Windows에서만 실행 가능"
+      ]
+    }
+  ]
+}
